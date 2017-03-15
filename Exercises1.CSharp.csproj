@@ -75,22 +75,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DamageTrigger.cs" />
-    <Compile Include="Assets\DoorController.cs" />
-    <Compile Include="Assets\DoorToggle.cs" />
-    <Compile Include="Assets\Explosion.cs" />
-    <Compile Include="Assets\IDamage.cs" />
-    <Compile Include="Assets\IInteractable.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
-    <Compile Include="Assets\PlayerHealth.cs" />
-    <Compile Include="Assets\PropelForward.cs" />
-    <Compile Include="Assets\Selector.cs" />
-    <Compile Include="Assets\Spawner.cs" />
-    <Compile Include="Assets\SpawnerTracker.cs" />
-    <Compile Include="Assets\Teleporter.cs" />
-    <Compile Include="Assets\Turret.cs" />
-    <Compile Include="Assets\TurretProjectile.cs" />
-    <Compile Include="Assets\UnitHealth.cs" />
+    <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\DamageTrigger.cs" />
+    <Compile Include="Assets\Scripts\DoorController.cs" />
+    <Compile Include="Assets\Scripts\DoorToggle.cs" />
+    <Compile Include="Assets\Scripts\Explosion.cs" />
+    <Compile Include="Assets\Scripts\IDamage.cs" />
+    <Compile Include="Assets\Scripts\IInteractable.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\PlayerJoints.cs" />
+    <Compile Include="Assets\Scripts\PropelForward.cs" />
+    <Compile Include="Assets\Scripts\Selector.cs" />
+    <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\SpawnerTracker.cs" />
+    <Compile Include="Assets\Scripts\Teleporter.cs" />
+    <Compile Include="Assets\Scripts\Turret.cs" />
+    <Compile Include="Assets\Scripts\TurretProjectile.cs" />
+    <Compile Include="Assets\Scripts\UnitHealth.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
