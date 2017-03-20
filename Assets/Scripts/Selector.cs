@@ -6,7 +6,8 @@ public class Selector : MonoBehaviour {
 
     public List<GameObject> selectorList;
     GameObject activeObject;
-    bool changeActive;
+
+    UnitProperties isUnitAttached;
 
     void Activate(GameObject obj)
     {
@@ -21,37 +22,29 @@ public class Selector : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        changeActive = false;
-
         foreach (var GameObject in selectorList)
         {
             deActivate(GameObject);
         }
+    }
 
-        activeObject = selectorList[0];
-
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Unit" 
+            && other.gameObject.GetComponent<UnitProperties>().isAttached == false)
+        {
+            other.gameObject.GetComponent<UnitProperties>().isAttached = true;
+            other.gameObject.GetComponent<UnitProperties>().myHero = gameObject;
+            selectorList.Add(other.gameObject);
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        changeActive = Input.GetKeyDown("space");
 
-        foreach (var item in selectorList)
+        foreach (GameObject item in selectorList)
         {
-            if (item.activeSelf == true)
-            {
-                item.SetActive(false);
-            }
-        }
-
-        activeObject.SetActive(true);
-
-        if (changeActive)
-        {
-
-            Debug.Log("hello");
-            activeObject = selectorList[Random.Range(0, 3)];
-            changeActive = false;
+           
         }
 
 	}

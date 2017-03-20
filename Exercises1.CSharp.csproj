@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Turret.cs" />
     <Compile Include="Assets\Scripts\TurretProjectile.cs" />
     <Compile Include="Assets\Scripts\UnitHealth.cs" />
+    <Compile Include="Assets\Scripts\UnitProperties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
