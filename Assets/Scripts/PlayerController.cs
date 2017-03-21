@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey("w"))
         {
 
-            rb.AddForceAtPosition(
+           // rb.AddForceAtPosition(
         }
 
         if (Input.GetKey("s"))
