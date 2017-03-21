@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : MonoBehaviour {
-
-    public GameObject player;
+public class EnemyShooter : _BaseAIController
+{
     public GameObject bulletPrefab;
 
     public float launchForce = 30.0f;
@@ -16,31 +15,25 @@ public class Turret : MonoBehaviour {
 
     public float firingRadius = 8.0f;
 
-    bool isPlayerInRange()
+    public override void Start() 
     {
-        return Vector3.Distance(player.transform.position, transform.position) <= firingRadius;
-    }
-
-    void Start()
-    {
+        base.Start();
         firingTimer = firingInterval;
     }
 
-	// Update is called once per frame
-	void Update () {
-        bool inRange = isPlayerInRange();
-
-        transform.forward = (player.transform.position - transform.position).normalized;
-
+    // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
         firingTimer -= Time.deltaTime;
 
-        if (firingTimer <= 0.0f && inRange)
+        if (firingTimer <= 0.0f && isPlayerInRange())
         {
             firingTimer = firingInterval;
             GameObject baby = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             baby.GetComponent<Rigidbody>().AddForce(firePoint.forward * launchForce, ForceMode.Impulse);
         }
-	}
+    }
 
     void OnDrawGizmos()
     {

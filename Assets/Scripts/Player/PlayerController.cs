@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    enum FORMSTATES
+    public enum FORMSTATES
     {
         BLOB, STAY, LINE
     }
@@ -13,15 +13,20 @@ public class PlayerController : MonoBehaviour {
     public float thrust;
     public float jumpStrength = 2.0f;
     public Rigidbody rb;
-
     public float turnSpeed = 50f;
-
-    public float shootStrength = 5.0f;
-	// Use this for initialization
+    public float shootStrength = 1.0f;
+    float distToGround;
+	
 	void Start () {
-        rb = GetComponent<Rigidbody>();
-        
+
+        rb = GetComponent<Rigidbody>();        
         unitStates = FORMSTATES.BLOB;
+        distToGround = GetComponent<Collider>().bounds.extents.y;
+    }
+
+    public string getEnumState()
+    {
+        return unitStates.ToString();
     }
 
     void RotateToMouse()
@@ -44,15 +49,18 @@ public class PlayerController : MonoBehaviour {
         {
             Vector3 target = ray.GetPoint(distance);
             Vector3 direction = target - transform.position;
-            float rotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, rotation, 0);
+            //float rotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.Euler(0, rotation, 0);
 
             return direction;
         }
         return transform.position;
     }
 
-    // Update is called once per frame
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+    }
 
     void Update () {
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
@@ -62,15 +70,15 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyUp("e"))
         {
-            unitStates++;
+                unitStates++;
         }
 
         else if (Input.GetKeyUp("q"))
         {
-            unitStates--;
+                unitStates--;
         }
 
-        if (Input.GetKey("space"))
+        if (Input.GetKey("space") && IsGrounded())
         {
             rb.AddForce(new Vector3(0,jumpStrength,0), ForceMode.Impulse);
         }

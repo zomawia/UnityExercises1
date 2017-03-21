@@ -9,25 +9,6 @@ public class Selector : MonoBehaviour {
 
     UnitProperties isUnitAttached;
 
-    void Activate(GameObject obj)
-    {
-        obj.SetActive(true);
-    }
-
-    void deActivate(GameObject obj)
-    {
-        obj.SetActive(false);        
-    }
-
-    // Use this for initialization
-    void Start ()
-    {
-        foreach (var GameObject in selectorList)
-        {
-            deActivate(GameObject);
-        }
-    }
-
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Unit" 
