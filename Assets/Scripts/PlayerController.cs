@@ -23,38 +23,51 @@ public class PlayerController : MonoBehaviour {
         
         unitStates = FORMSTATES.BLOB;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    void RotateToMouse()
+    {
+        Vector3 v3T = Input.mousePosition;
+        v3T.z = Mathf.Abs(Camera.main.transform.position.y - transform.position.y);
+        v3T = Camera.main.ScreenToWorldPoint(v3T);
+        v3T -= transform.position;
+        v3T = v3T * 10000.0f + transform.position;
+        transform.LookAt(v3T);
+    }
+
+    Vector3 MouseShoot()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.up, new Vector3(0, 0.5f, 0));
+
+        float distance;
+        if (plane.Raycast(ray, out distance))
+        {
+            Vector3 target = ray.GetPoint(distance);
+            Vector3 direction = target - transform.position;
+            float rotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, rotation, 0);
+
+            return direction;
+        }
+        return transform.position;
+    }
+
+    // Update is called once per frame
+
+    void Update () {
+        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
+        transform.Translate(0, 0, z);
+        transform.Rotate(0, x, 0);
 
         if (Input.GetKeyUp("e"))
         {
             unitStates++;
         }
+
         else if (Input.GetKeyUp("q"))
-            {
-                unitStates--;
-            }
-
-        if (Input.GetKey("w"))
         {
-
-           // rb.AddForceAtPosition(
-        }
-
-        if (Input.GetKey("s"))
-        {
-            rb.AddForce(Vector3.forward * -thrust, ForceMode.Impulse);
-        }
-
-        if (Input.GetKey("a"))
-        {
-            transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey("d"))
-        {
-            transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
+            unitStates--;
         }
 
         if (Input.GetKey("space"))
@@ -67,12 +80,17 @@ public class PlayerController : MonoBehaviour {
 
             if (unitStates == FORMSTATES.BLOB)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //RotateToMouse();
+                Vector3 point = MouseShoot();
 
-                Ray playerRay = new Ray(transform.position, ray.origin);
+                Rigidbody rb = gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<Rigidbody>();
 
-                gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<Rigidbody>().AddForce(playerRay.direction * shootStrength, ForceMode.Impulse);
-                gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<UnitProperties>().isAttached = false;
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                //Ray playerRay = new Ray(transform.position, ray.origin);
+
+                rb.AddForce(point * shootStrength, ForceMode.Impulse);
+                rb.gameObject.GetComponent<UnitProperties>().isAttached = false;
                 gameObject.GetComponent<Selector>().selectorList.RemoveAt(0);
             }
 
@@ -86,7 +104,5 @@ public class PlayerController : MonoBehaviour {
 
             }
         }
-
-        Debug.DrawLine(transform.forward, transform.forward * 55);
     }
 }
