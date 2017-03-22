@@ -25,8 +25,17 @@ public class UnitProperties : MonoBehaviour {
         myTransform = transform; //cache me ousside
     }
 
-	// Use this for initialization
-	void Start ()
+    void OnCollisionEnter(Collider other)
+    {
+        Rigidbody myRB = gameObject.GetComponent<Rigidbody>();
+        IDamage otherPlayer = other.gameObject.GetComponent<IDamage>();
+        float dmg = myRB.velocity.magnitude * myRB.mass;
+        otherPlayer.TakeDamage(dmg);
+        otherPlayer.displayDamage(dmg);
+    }
+
+    // Use this for initialization
+    void Start ()
     {
         myTarget = GameObject.FindWithTag("Player").transform; //target the player
         //agent = GetComponent<NavMeshAgent>();

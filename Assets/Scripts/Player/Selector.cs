@@ -21,12 +21,8 @@ public class Selector : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-
-        foreach (GameObject item in selectorList)
-        {
-           
-        }
-
+	void Update ()
+    {
+        selectorList.RemoveAll(GameObject => GameObject == null);
 	}
 }

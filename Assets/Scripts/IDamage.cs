@@ -6,4 +6,6 @@ interface IDamage
 {
     float EstimatedDamageTaken(float damage);
     void TakeDamage(float damage);
+
+    void displayDamage(float damage);
 }

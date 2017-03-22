@@ -7,7 +7,7 @@ public class Turret : MonoBehaviour {
     public GameObject player;
     public GameObject bulletPrefab;
 
-    public float launchForce = 30.0f;
+    public float launchForce = 10.0f;
 
     public Transform firePoint;
 

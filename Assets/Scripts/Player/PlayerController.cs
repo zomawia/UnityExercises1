@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     public enum FORMSTATES
     {
-        BLOB, STAY, LINE
+        STAY, BLOB, REVOLVE, LINE
     }
 
     public FORMSTATES unitStates;
@@ -13,10 +13,11 @@ public class PlayerController : MonoBehaviour {
     public float thrust;
     public float jumpStrength = 2.0f;
     public Rigidbody rb;
-    public float turnSpeed = 50f;
-    public float shootStrength = 1.0f;
+    public float turnSpeed = 50.0f;
+    public float shootStrength = 3.0f;
     float distToGround;
     List<GameObject> objects;
+    float rotateSpeed = 1.5f;
 
     public string getEnumState()
     {
@@ -85,19 +86,28 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (unitStates == FORMSTATES.LINE)
+        {            
+            objects = gameObject.GetComponent<Selector>().selectorList;
+            foreach (GameObject obj in objects)
+            {              
+                if (obj != null)
+                {
+
+                }
+            }
+        }
+
+        if (unitStates == FORMSTATES.REVOLVE)
         {
-            int i = 1;
             objects = gameObject.GetComponent<Selector>().selectorList;
             foreach (GameObject obj in objects)
             {
-                ++i;
                 if (obj != null)
                 {
-                    obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    obj.transform.Translate(
-                        transform.position.x + i, 
-                        transform.position.y, 
-                        transform.position.z + i);
+                    obj.transform.position = gameObject.transform.position +
+                        (obj.transform.position - gameObject.transform.position).normalized *
+                        1.0f;
+                    obj.transform.RotateAround(gameObject.transform.position, Vector3.up * 20, 100 * rotateSpeed * Time.deltaTime);
                 }
             }
         }
@@ -105,7 +115,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) //shoot ur units
         {
 
-            if (unitStates == FORMSTATES.BLOB)
+            if (unitStates == FORMSTATES.BLOB || unitStates == FORMSTATES.REVOLVE)
             {
                 //RotateToMouse();
                 Vector3 point = MouseShoot();

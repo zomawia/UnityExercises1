@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4470295542345042}
   - component: {fileID: 54195628517075894}
   - component: {fileID: 114023225868273120}
+  - component: {fileID: 114754046606148316}
   m_Layer: 0
   m_Name: Enemy_Shooter
   m_TagString: Untagged
@@ -847,10 +848,23 @@ MonoBehaviour:
   player: {fileID: 0}
   bulletPrefab: {fileID: 1442752783493300, guid: 3c95f05c0d28da84f917b64e48acfe16,
     type: 2}
-  launchForce: 50
-  firePoint: {fileID: 4214350390997616}
+  launchForce: 10
+  firePoint: {fileID: 4433025821989772}
   firingInterval: 1
   firingRadius: 8
+--- !u!114 &114754046606148316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1518958221126668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996ce1b584707c44e9ad52e9af3b4f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthValue: 100
+  armorValue: 0
 --- !u!135 &135163346250536682
 SphereCollider:
   m_ObjectHideFlags: 1

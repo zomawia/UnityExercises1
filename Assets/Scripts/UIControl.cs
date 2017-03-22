@@ -27,7 +27,7 @@ public class UIControl : MonoBehaviour {
 
         myText = newGO.AddComponent<Text>();
         Font Arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        myText.rectTransform.position = new Vector3(0, 0, 0);
+        myText.rectTransform.position = new Vector3(60, 0, 0);
         myText.font = Arial;
         myText.material = Arial.material;
         myText.text = "Form: " + currState;
