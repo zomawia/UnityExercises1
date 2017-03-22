@@ -847,7 +847,7 @@ MonoBehaviour:
   player: {fileID: 0}
   bulletPrefab: {fileID: 1442752783493300, guid: 3c95f05c0d28da84f917b64e48acfe16,
     type: 2}
-  launchForce: 30
+  launchForce: 50
   firePoint: {fileID: 4214350390997616}
   firingInterval: 1
   firingRadius: 8

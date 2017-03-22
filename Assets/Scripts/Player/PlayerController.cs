@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
         BLOB, STAY, LINE
     }
 
-    FORMSTATES unitStates;
+    public FORMSTATES unitStates;
 
     public float thrust;
     public float jumpStrength = 2.0f;
@@ -16,13 +16,7 @@ public class PlayerController : MonoBehaviour {
     public float turnSpeed = 50f;
     public float shootStrength = 1.0f;
     float distToGround;
-	
-	void Start () {
-
-        rb = GetComponent<Rigidbody>();        
-        unitStates = FORMSTATES.BLOB;
-        distToGround = GetComponent<Collider>().bounds.extents.y;
-    }
+    List<GameObject> objects;
 
     public string getEnumState()
     {
@@ -61,10 +55,17 @@ public class PlayerController : MonoBehaviour {
     {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
+    void Start()
+    {
+        objects = gameObject.GetComponent<Selector>().selectorList;
+        rb = GetComponent<Rigidbody>();
+        unitStates = FORMSTATES.BLOB;
+        distToGround = GetComponent<Collider>().bounds.extents.y;
+    }
 
     void Update () {
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 125.0f;
         transform.Translate(0, 0, z);
         transform.Rotate(0, x, 0);
 
@@ -81,6 +82,24 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey("space") && IsGrounded())
         {
             rb.AddForce(new Vector3(0,jumpStrength,0), ForceMode.Impulse);
+        }
+
+        if (unitStates == FORMSTATES.LINE)
+        {
+            int i = 1;
+            objects = gameObject.GetComponent<Selector>().selectorList;
+            foreach (GameObject obj in objects)
+            {
+                ++i;
+                if (obj != null)
+                {
+                    obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    obj.transform.Translate(
+                        transform.position.x + i, 
+                        transform.position.y, 
+                        transform.position.z + i);
+                }
+            }
         }
 
         if (Input.GetMouseButtonDown(0)) //shoot ur units
@@ -104,7 +123,7 @@ public class PlayerController : MonoBehaviour {
 
             if (unitStates == FORMSTATES.LINE)
             {
-
+                
             }
 
             if (unitStates == FORMSTATES.STAY)

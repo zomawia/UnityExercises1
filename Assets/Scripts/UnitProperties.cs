@@ -34,9 +34,10 @@ public class UnitProperties : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (isAttached == true)
+		if (isAttached == true && myHero.GetComponent<PlayerController>().unitStates == PlayerController.FORMSTATES.BLOB)
         {
             //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             float distance = Vector3.Distance(myTransform.position, myTarget.position);
 
             myTransform.rotation = Quaternion.Slerp(
