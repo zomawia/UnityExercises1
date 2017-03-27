@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 4470295542345042}
   - component: {fileID: 54195628517075894}
   - component: {fileID: 114023225868273120}
-  - component: {fileID: 114754046606148316}
+  - component: {fileID: 114361388757786760}
   m_Layer: 0
   m_Name: Enemy_Shooter
   m_TagString: Untagged
@@ -852,7 +852,7 @@ MonoBehaviour:
   firePoint: {fileID: 4433025821989772}
   firingInterval: 1
   firingRadius: 8
---- !u!114 &114754046606148316
+--- !u!114 &114361388757786760
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -860,7 +860,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1518958221126668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 996ce1b584707c44e9ad52e9af3b4f7b, type: 3}
+  m_Script: {fileID: 11500000, guid: 90efbbfc2cfcc114098a669a69f842ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthValue: 100

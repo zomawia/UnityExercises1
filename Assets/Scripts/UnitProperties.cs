@@ -25,13 +25,16 @@ public class UnitProperties : MonoBehaviour {
         myTransform = transform; //cache me ousside
     }
 
-    void OnCollisionEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        Rigidbody myRB = gameObject.GetComponent<Rigidbody>();
-        IDamage otherPlayer = other.gameObject.GetComponent<IDamage>();
-        float dmg = myRB.velocity.magnitude * myRB.mass;
-        otherPlayer.TakeDamage(dmg);
-        otherPlayer.displayDamage(dmg);
+        if (other.gameObject.tag != "Unit")
+        {
+            Rigidbody myRB = gameObject.GetComponent<Rigidbody>();
+            IDamage otherPlayer = other.gameObject.GetComponent<IDamage>();
+            float dmg = myRB.velocity.magnitude * myRB.mass;
+            otherPlayer.TakeDamage(dmg);
+            otherPlayer.displayDamage(dmg);
+        }
     }
 
     // Use this for initialization

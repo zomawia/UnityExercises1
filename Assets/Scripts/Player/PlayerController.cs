@@ -107,7 +107,10 @@ public class PlayerController : MonoBehaviour {
                     obj.transform.position = gameObject.transform.position +
                         (obj.transform.position - gameObject.transform.position).normalized *
                         1.0f;
-                    obj.transform.RotateAround(gameObject.transform.position, Vector3.up * 20, 100 * rotateSpeed * Time.deltaTime);
+                    obj.transform.RotateAround(
+                        gameObject.transform.position + (transform.up * 6), 
+                        Vector3.up, 
+                        100 * rotateSpeed * Time.deltaTime);
                 }
             }
         }
@@ -120,13 +123,12 @@ public class PlayerController : MonoBehaviour {
                 //RotateToMouse();
                 Vector3 point = MouseShoot();
 
-                Rigidbody rb = gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<Rigidbody>();
-
-                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                //Ray playerRay = new Ray(transform.position, ray.origin);
-
+                Rigidbody rb = gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<Rigidbody>();                
+                rb.transform.position = transform.position + (transform.forward * 2);
                 rb.AddForce(point * shootStrength, ForceMode.Impulse);
+
+                //rb.gameObject.AddComponent<ParticleSystem>();
+
                 rb.gameObject.GetComponent<UnitProperties>().isAttached = false;
                 gameObject.GetComponent<Selector>().selectorList.RemoveAt(0);
             }
