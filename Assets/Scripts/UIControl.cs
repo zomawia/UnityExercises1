@@ -9,6 +9,7 @@ public class UIControl : MonoBehaviour {
     private Text myText;
     private GameObject player;
     PlayerController pc;
+    PlayerHealth playerHealth;
     string prevState, currState;
 
     bool isStateChanged()
@@ -21,7 +22,7 @@ public class UIControl : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         currState = prevState = player.GetComponent<PlayerController>().getEnumState();
         pc = player.GetComponent<PlayerController>();
-
+        playerHealth = player.GetComponent<PlayerHealth>();
         GameObject newGO = new GameObject("myTextGO");
         newGO.transform.SetParent(transform);
 
@@ -30,7 +31,7 @@ public class UIControl : MonoBehaviour {
         myText.rectTransform.position = new Vector3(60, 0, 0);
         myText.font = Arial;
         myText.material = Arial.material;
-        myText.text = "Form: " + currState;
+        myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
     }
 
     void Update()
@@ -39,7 +40,8 @@ public class UIControl : MonoBehaviour {
         if (isStateChanged() == true)
         {
             prevState = currState;
-            myText.text = "Form: " + currState;
-        }        
+            myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
+        }
+        myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
     }
 }

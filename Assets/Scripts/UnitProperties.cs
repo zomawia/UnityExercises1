@@ -31,6 +31,7 @@ public class UnitProperties : MonoBehaviour {
         {
             Rigidbody myRB = gameObject.GetComponent<Rigidbody>();
             IDamage otherPlayer = other.gameObject.GetComponent<IDamage>();
+            if (otherPlayer == null) { return; }
             float dmg = myRB.velocity.magnitude * myRB.mass;
             otherPlayer.TakeDamage(dmg);
             otherPlayer.displayDamage(dmg);

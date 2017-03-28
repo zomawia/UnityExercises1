@@ -13,6 +13,8 @@ public class UnitHealth : MonoBehaviour, IDamage
     Renderer[] oldColors;
     Renderer[] objs;
 
+    public GameObject ExplosionVFX;
+
     public UnitHealth() : this(100, 0) { }
 
     public UnitHealth(float startHealth) : this(startHealth, 0) { }
@@ -48,8 +50,17 @@ public class UnitHealth : MonoBehaviour, IDamage
         }
     }
 
+    void Explode()
+    {
+        Debug.Log("EXXXXXX");
+        Instantiate(ExplosionVFX, transform.position, transform.rotation);
+
+        //Destroy(gameObject, exp.main.duration);
+    }
+
     void doDestroy()
     {
+
         Destroy(GetComponent<EnemyShooter>());
         Destroy(GetComponent<_BaseAIController>());
         
@@ -68,6 +79,7 @@ public class UnitHealth : MonoBehaviour, IDamage
     void Start()
     {        
         objs = oldColors = GetComponentsInChildren<Renderer>();
+
     }
 
     // Update is called once per frame
@@ -75,6 +87,7 @@ public class UnitHealth : MonoBehaviour, IDamage
     {
         if (healthValue <= 0)
         {
+            Explode();
             doDestroy();
         }
     }

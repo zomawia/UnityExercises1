@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     List<GameObject> objects;
     float rotateSpeed = 1.5f;
 
+    float knockbackDmg = 2;
+
     public string getEnumState()
     {
         return unitStates.ToString();
@@ -52,10 +54,43 @@ public class PlayerController : MonoBehaviour {
         return transform.position;
     }
 
+    void doShoot()
+    {
+        Vector3 point = MouseShoot();
+
+        Rigidbody rb = gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<Rigidbody>();
+        rb.transform.position = transform.position + (transform.forward * 2);
+        rb.AddForce(point * shootStrength, ForceMode.Impulse);
+
+        //rb.gameObject.AddComponent<ParticleSystem>();
+
+        rb.gameObject.GetComponent<UnitProperties>().isAttached = false;
+        gameObject.GetComponent<Selector>().selectorList.RemoveAt(0);
+    }
+
     bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
+
+    void OnCollisionEnter(Collision other)
+    {
+        float force = 100;
+
+        // run into an enemy knockback and small damage
+        if (other.gameObject.tag == "Enemy")
+        {
+            Vector3 dir = other.contacts[0].point - transform.position;
+            dir = -dir.normalized;
+
+            gameObject.GetComponent<Rigidbody>().AddForce(dir * force, ForceMode.Impulse);
+
+            //take small damage
+            IDamage thePlayer = gameObject.GetComponent<IDamage>();
+            thePlayer.TakeDamage(knockbackDmg);
+        }
+    }
+
     void Start()
     {
         objects = gameObject.GetComponent<Selector>().selectorList;
@@ -115,22 +150,13 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if (Input.GetMouseButtonDown(0)) //shoot ur units
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(1)) //shoot ur units
         {
 
             if (unitStates == FORMSTATES.BLOB || unitStates == FORMSTATES.REVOLVE)
             {
                 //RotateToMouse();
-                Vector3 point = MouseShoot();
-
-                Rigidbody rb = gameObject.GetComponent<Selector>().selectorList[0].gameObject.GetComponent<Rigidbody>();                
-                rb.transform.position = transform.position + (transform.forward * 2);
-                rb.AddForce(point * shootStrength, ForceMode.Impulse);
-
-                //rb.gameObject.AddComponent<ParticleSystem>();
-
-                rb.gameObject.GetComponent<UnitProperties>().isAttached = false;
-                gameObject.GetComponent<Selector>().selectorList.RemoveAt(0);
+                doShoot();                
             }
 
             if (unitStates == FORMSTATES.LINE)
