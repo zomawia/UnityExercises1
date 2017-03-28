@@ -11,15 +11,17 @@ public class PlayerController : MonoBehaviour {
     public FORMSTATES unitStates;
 
     public float thrust;
-    public float jumpStrength = 2.0f;
+    public float jumpStrength = 2.5f;
     public Rigidbody rb;
     public float turnSpeed = 50.0f;
     public float shootStrength = 3.0f;
     float distToGround;
     List<GameObject> objects;
-    float rotateSpeed = 1.5f;
+    
+	float rotateSpeed = 3.0f;
+	float orbitRadius = 1.0f;
 
-    float knockbackDmg = 2;
+    float knockbackDmg = 0;
 
     public string getEnumState()
     {
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour {
         rb.transform.position = transform.position + (transform.forward * 2);
         rb.AddForce(point * shootStrength, ForceMode.Impulse);
 
+        rb.gameObject.GetComponent<UnitProperties>().playTrail();
         //rb.gameObject.AddComponent<ParticleSystem>();
 
         rb.gameObject.GetComponent<UnitProperties>().isAttached = false;
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-        float force = 100;
+        float force = 8;
 
         // run into an enemy knockback and small damage
         if (other.gameObject.tag == "Enemy")
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour {
     {
         objects = gameObject.GetComponent<Selector>().selectorList;
         rb = GetComponent<Rigidbody>();
-        unitStates = FORMSTATES.BLOB;
+		unitStates = FORMSTATES.REVOLVE;
         distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
@@ -107,29 +110,23 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyUp("e"))
         {
-                unitStates++;
+			orbitRadius += 0.2f;
         }
 
-        else if (Input.GetKeyUp("q"))
+		if (orbitRadius > 6.0f)
+			orbitRadius = 6.0f;
+
+        if (Input.GetKeyUp("q"))
         {
-                unitStates--;
+			orbitRadius -= 0.2f;
         }
+
+		if (orbitRadius < 1.0f)
+			orbitRadius = 1.0f;
 
         if (Input.GetKey("space") && IsGrounded())
         {
             rb.AddForce(new Vector3(0,jumpStrength,0), ForceMode.Impulse);
-        }
-
-        if (unitStates == FORMSTATES.LINE)
-        {            
-            objects = gameObject.GetComponent<Selector>().selectorList;
-            foreach (GameObject obj in objects)
-            {              
-                if (obj != null)
-                {
-
-                }
-            }
         }
 
         if (unitStates == FORMSTATES.REVOLVE)
@@ -141,9 +138,9 @@ public class PlayerController : MonoBehaviour {
                 {
                     obj.transform.position = gameObject.transform.position +
                         (obj.transform.position - gameObject.transform.position).normalized *
-                        1.0f;
+						orbitRadius;
                     obj.transform.RotateAround(
-                        gameObject.transform.position + (transform.up * 6), 
+						gameObject.transform.position + new Vector3(0,5,0), 
                         Vector3.up, 
                         100 * rotateSpeed * Time.deltaTime);
                 }
@@ -155,18 +152,10 @@ public class PlayerController : MonoBehaviour {
 
             if (unitStates == FORMSTATES.BLOB || unitStates == FORMSTATES.REVOLVE)
             {
-                //RotateToMouse();
-                doShoot();                
-            }
-
-            if (unitStates == FORMSTATES.LINE)
-            {
-                
-            }
-
-            if (unitStates == FORMSTATES.STAY)
-            {
-
+                if (objects[0] != null)
+                {
+                    doShoot();
+                }
             }
         }
     }

@@ -10,17 +10,17 @@ public class UIControl : MonoBehaviour {
     private GameObject player;
     PlayerController pc;
     PlayerHealth playerHealth;
-    string prevState, currState;
+    //string prevState, currState;
 
-    bool isStateChanged()
-    {
-        return prevState != currState;
-    }   
+    //bool isStateChanged()
+    //{
+    //    return prevState != currState;
+    //}   
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        currState = prevState = player.GetComponent<PlayerController>().getEnumState();
+        //currState = prevState = player.GetComponent<PlayerController>().getEnumState();
         pc = player.GetComponent<PlayerController>();
         playerHealth = player.GetComponent<PlayerHealth>();
         GameObject newGO = new GameObject("myTextGO");
@@ -31,17 +31,17 @@ public class UIControl : MonoBehaviour {
         myText.rectTransform.position = new Vector3(60, 0, 0);
         myText.font = Arial;
         myText.material = Arial.material;
-        myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
+        myText.text = "Health: " + playerHealth.healthValue;
     }
 
     void Update()
     {
-        currState = pc.getEnumState();
-        if (isStateChanged() == true)
-        {
-            prevState = currState;
-            myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
-        }
-        myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
+        //currState = pc.getEnumState();
+        //if (isStateChanged() == true)
+        //{
+        //    prevState = currState;
+        //    myText.text = "Health: " + playerHealth.healthValue + " Form: " + currState;
+        //}
+        myText.text = "Health: " + playerHealth.healthValue;
     }
 }

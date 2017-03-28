@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyCharger : _BaseAIController
 {
-    public float viewRadius = 15.0f;
-    public float movespeed = 7.0f;
+    public float chargeRadius = 12.0f;
+    public float movespeed = 6.0f;
     public float attackDmg = 20.0f;
     float minRadius = .5f;
     float timer;
@@ -25,8 +25,8 @@ public class EnemyCharger : _BaseAIController
     }
 
     void OnCollisionEnter(Collision other)
-    {
-        float force = 50f;
+    {		
+		float force = 8;
         if (other.gameObject.tag == "Player")
         {
             doAttack();
@@ -51,7 +51,7 @@ public class EnemyCharger : _BaseAIController
         //{
         //    transform.position += transform.forward * movespeed * Time.deltaTime;
         //}
-        if (Vector3.Distance(transform.position, player.transform.position) < viewRadius &&
+		if (Vector3.Distance(transform.position, player.transform.position) < chargeRadius &&
             Vector3.Distance(transform.position, player.transform.position) >= minRadius)
         {
             transform.position += transform.forward * movespeed * Time.deltaTime;

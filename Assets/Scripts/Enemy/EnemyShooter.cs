@@ -6,7 +6,7 @@ public class EnemyShooter : _BaseAIController
 {
     public GameObject bulletPrefab;
 
-    public float launchForce = 30.0f;
+    public float launchForce = 15.0f;
 
     public Transform firePoint;
 
@@ -14,6 +14,11 @@ public class EnemyShooter : _BaseAIController
     private float firingTimer;
 
     public float firingRadius = 8.0f;
+
+    public virtual void LookAt()
+    {
+        transform.forward = (player.transform.position - transform.position).normalized;
+    }
 
     public override void Start() 
     {
@@ -30,7 +35,7 @@ public class EnemyShooter : _BaseAIController
         if (firingTimer <= 0.0f && isPlayerInRange())
         {
             firingTimer = firingInterval;
-            GameObject baby = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            GameObject baby = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);            
             baby.GetComponent<Rigidbody>().AddForce(firePoint.forward * launchForce, ForceMode.Impulse);
         }
     }

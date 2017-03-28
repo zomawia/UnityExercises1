@@ -9,6 +9,9 @@ public class PlayerHealth : MonoBehaviour, IDamage
     public float healthValue;
     public float armorValue;
 
+	// for camera shake
+	CameraController camControl;
+
     public PlayerHealth() : this(100, 0) { }
 
     public PlayerHealth(float startHealth) : this(startHealth, 0) { }
@@ -29,20 +32,12 @@ public class PlayerHealth : MonoBehaviour, IDamage
     {
         IDamage dmg = this;
         healthValue -= dmg.EstimatedDamageTaken(damageDealt);
+		camControl.receivedDmg = true;
     }
 
     void IDamage.displayDamage(float damage)
     {
-        GameObject newGO = new GameObject("myTextGO");
-        newGO.transform.SetParent(transform);
 
-        myText = newGO.AddComponent<Text>();
-        Font Arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        //myText.rectTransform.position = transform.position;
-        myText.font = Arial;
-        myText.material = Arial.material;
-        myText.color = Color.red;
-        myText.text = damage.ToString();
     }
 
     void doDestroy()
@@ -53,12 +48,16 @@ public class PlayerHealth : MonoBehaviour, IDamage
         
     }
 
+	void Start()
+	{
+		camControl = Camera.main.GetComponent<CameraController> ();
+	}
+
 	// Update is called once per frame
 	void Update ()
     {
         if (healthValue <= 0)
-        {
-            --Spawner.livingSpawns;
+        {            
             doDestroy();
         }
 	}

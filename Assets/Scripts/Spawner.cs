@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour {
     public float spawnFuzzy = 0.5f;
 
     public static int livingSpawns;
-    public int maxLivingSpawns = 5;
+    public int maxLivingSpawns = 8;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour {
         {
             spawnTimer = spawnInterval + Random.Range(-spawnFuzzy, spawnFuzzy);
             GameObject baby = Instantiate(prefab);
-            baby.transform.position.Set(0, 25, 0);
+            baby.transform.position = transform.position;
             //baby.AddComponent<SpawnerTracker>().origin = this;
 
             livingSpawns++;
