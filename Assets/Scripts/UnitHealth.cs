@@ -39,15 +39,15 @@ public class UnitHealth : MonoBehaviour, IDamage
 
     void IDamage.displayDamage(float damage)
     {
-        for (int i = 0; i < objs.Length; ++i)
-        {
-            objs[i].material.color = collideColor;            
-        }
+        //for (int i = 0; i < objs.Length; ++i)
+        //{
+        //    objs[i].material.color = collideColor;            
+        //}
 
-        for (int i = 0; i < objs.Length; ++i)
-        {
-            objs[i].material.color = oldColors[i].material.color;
-        }
+        //for (int i = 0; i < objs.Length; ++i)
+        //{
+        //    objs[i].material.color = oldColors[i].material.color;
+        //}
     }
 
     void Explode()
