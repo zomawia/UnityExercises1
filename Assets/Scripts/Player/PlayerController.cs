@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
     ParticleSystem exhaust;
 
     public float thrust;
-    public float jumpStrength = 5.5f;
+    public float jumpStrength = 4.5f;
     public Rigidbody rb;
     public float turnSpeed = 50.0f;
     public float shootStrength = 3.0f;
