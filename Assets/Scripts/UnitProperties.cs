@@ -38,6 +38,7 @@ public class UnitProperties : MonoBehaviour {
             }
 
             float dmg = myRB.velocity.magnitude * myRB.mass;
+            if (dmg < 1) { return; }
             otherPlayer.TakeDamage(dmg);
             otherPlayer.displayDamage(dmg);
         }

@@ -12,8 +12,8 @@ public class EnemyShooter : _BaseAIController
 
     public float firingInterval = 1.0f;
     private float firingTimer;
-
-    public float firingRadius = 8.0f;
+    
+    public float firingRadius = 7.0f;
 
     public virtual void LookAt()
     {
@@ -32,16 +32,13 @@ public class EnemyShooter : _BaseAIController
         base.Update();
         firingTimer -= Time.deltaTime;
 
+        //LookAt();
+
         if (firingTimer <= 0.0f && isPlayerInRange())
         {
             firingTimer = firingInterval;
             GameObject baby = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);            
             baby.GetComponent<Rigidbody>().AddForce(firePoint.forward * launchForce, ForceMode.Impulse);
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, firingRadius);
     }
 }

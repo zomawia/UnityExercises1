@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 
     public FORMSTATES unitStates;
 
+    ParticleSystem exhaust;
+
     public float thrust;
     public float jumpStrength = 2.5f;
     public Rigidbody rb;
@@ -76,6 +78,17 @@ public class PlayerController : MonoBehaviour {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Health"))
+        {
+            GetComponent<PlayerHealth>().healthValue += other.GetComponent<Rotator>().HealthBoost;
+            other.gameObject.GetComponent<Rotator>().playParticles();
+            other.gameObject.SetActive(false);
+                       
+        }
+    }
+
     void OnCollisionEnter(Collision other)
     {
         float force = 8;
@@ -100,13 +113,26 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
 		unitStates = FORMSTATES.REVOLVE;
         distToGround = GetComponent<Collider>().bounds.extents.y;
+        exhaust = gameObject.GetComponent<ParticleSystem>();        
     }
 
-    void Update () {
+    void Update()
+    {
+        if (Input.GetKeyDown("w"))
+        {
+            exhaust.Play();
+        }        
+        if (Input.GetKeyUp("w"))
+        {
+            exhaust.Stop();
+        }
+    }
+
+    void FixedUpdate () {
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 125.0f;
         transform.Translate(0, 0, z);
-        transform.Rotate(0, x, 0);
+        transform.Rotate(0, x, 0);        
 
         if (Input.GetKeyUp("e"))
         {

@@ -41,9 +41,4 @@ public class Turret : MonoBehaviour {
             baby.GetComponent<Rigidbody>().AddForce(firePoint.forward * launchForce, ForceMode.Impulse);
         }
 	}
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, firingRadius);
-    }
 }

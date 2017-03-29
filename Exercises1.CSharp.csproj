@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\Player\Selector.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\PropelForward.cs" />
+    <Compile Include="Assets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\SpawnerTracker.cs" />
     <Compile Include="Assets\Scripts\Teleporter.cs" />

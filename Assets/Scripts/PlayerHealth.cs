@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour, IDamage
 
     void doDestroy()
     {
-        Destroy(gameObject);
+        Destroy(gameObject.GetComponent<PlayerController>());
 
         //allow to be acquire
         

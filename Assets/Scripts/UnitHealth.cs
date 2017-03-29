@@ -52,7 +52,6 @@ public class UnitHealth : MonoBehaviour, IDamage
 
     void Explode()
     {
-        //Debug.Log("EXXXXXX");
         Instantiate(ExplosionVFX, transform.position, transform.rotation);
         ExplosionVFX.transform.parent = transform;
         //Destroy(gameObject, exp.main.duration);
@@ -60,12 +59,12 @@ public class UnitHealth : MonoBehaviour, IDamage
 
     void doDestroy()
     {
-        if (GetComponent<EnemyShooter>())
-            Destroy(GetComponent<EnemyShooter>());
-        if (GetComponent<_BaseAIController>())
-            Destroy(GetComponent<_BaseAIController>());
-        if (GetComponent<EnemyCharger>())
-            Destroy(GetComponent<EnemyCharger>());
+        //if (GetComponent<EnemyShooter>())
+        //    Destroy(GetComponent<EnemyShooter>());
+        //if (GetComponent<_BaseAIController>())
+        //    Destroy(GetComponent<_BaseAIController>());
+        //if (GetComponent<EnemyCharger>())
+        //    Destroy(GetComponent<EnemyCharger>());
 
         foreach (Transform obj in transform)
         {

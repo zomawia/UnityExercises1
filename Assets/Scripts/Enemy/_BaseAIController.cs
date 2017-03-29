@@ -6,7 +6,7 @@ public class _BaseAIController : MonoBehaviour {
 
     public GameObject player;
 
-    float viewRadius = 10;
+    float viewRadius = 10.0f;
 
     public bool isPlayerInRange()
     {
